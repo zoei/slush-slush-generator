@@ -17,7 +17,10 @@
     "gulp-conflict": "^0.4.0",
     "gulp-if": "^2.0.2",
     "gulp-install": "^1.1.0",
+    "gulp-rename": "^1.4.0",
     "gulp-template": "^5.0.0",
-    "inquirer": "^4.0.1"
+    "iniparser": "^1.0.5",
+    "inquirer": "^4.0.1",
+    "underscore.string": "^3.3.4"
   }
 }

@@ -1,24 +1,41 @@
 {
-  "name": "slush-<%= name %>-generator",
-  "version": "0.0.1",
-  "description": "slush-<%= name %>-generator",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "slush",
-    "generator"
-  ],
-  "author": "zoei@163.com",
-  "license": "ISC",
-  "dependencies": {
-    "graceful-fs": "^4.1.11",
-    "gulp": "^3.9.1",
-    "gulp-conflict": "^0.4.0",
-    "gulp-if": "^2.0.2",
-    "gulp-install": "^1.1.0",
-    "gulp-template": "^5.0.0",
-    "inquirer": "^4.0.1"
-  }
+    "name": "<%= appNameSlug %>",
+    "description": "<%= appDescription %>",
+    "version": "<%= appVersion %>",
+    "homepage": "https://github.com/<%= userName %>/<%= appNameSlug %>",
+    "author": {
+        "name": "<%= authorName %>",
+        "email": "<%= authorEmail %>"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/<%= userName %>/<%= appNameSlug %>.git"
+    },
+    "bugs": {
+        "url": "https://github.com/<%= userName %>/<%= appNameSlug %>/issues"
+    },
+    "license": "<%= license %>",
+    "main": "slushfile.js",
+    "engines": {
+        "node": ">= 0.10.26",
+        "npm": ">=1.4.3"
+    },
+    "scripts": {
+        "test": "echo \"No tests\""
+    },
+    "dependencies": {
+        "slush": ">=1.0.0",
+        "gulp": "^3.6.2",
+        "gulp-template": "^0.1.1",
+        "gulp-install": "^0.1.4",
+        "gulp-conflict": "^0.1.1",
+        "gulp-if": "^2.0.2",
+        "gulp-rename": "^1.2.0",
+        "underscore.string": "^2.3.3",
+        "inquirer": "^3.3.0",
+        "iniparser": "^1.0.5"
+    },
+    "keywords": [
+        "slushgenerator"
+    ]
 }
