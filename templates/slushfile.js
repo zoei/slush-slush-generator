@@ -100,8 +100,8 @@ gulp.task('default', function (done) {
           }
         }))
         .pipe(conflict(`./${gulp.args.join(' ')}`))
-        .pipe(gulp.dest(`./${gulp.args.join(' ')}`))
-        gulpif(answers.install, install())
+        .pipe(gulp.dest(`./${answers.appName}`))
+        .pipe(gulpif(answers.install, install()))
         .on('end', function () {
           done();
         });
