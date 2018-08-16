@@ -52,10 +52,11 @@ var defaults = (function () {
 })();
 
 gulp.task('default', function (done) {
+  var nameFromArg = gulp.args.join(' ')
   var prompts = [{
     name: 'appName',
     message: 'What is the name of your project?',
-    default: defaults.appName
+    default: nameFromArg || defaults.appName
   }, {
     name: 'appDescription',
     message: 'What is the description?'
@@ -92,6 +93,7 @@ gulp.task('default', function (done) {
         return done();
       }
       answers.appNameSlug = _.slugify(answers.appName);
+      var destDir = './' + (nameFromArg ? answers.appNameSlug : '')
       gulp.src(__dirname + '/templates/**')
         .pipe(template(answers))
         .pipe(rename(function (file) {
@@ -99,8 +101,8 @@ gulp.task('default', function (done) {
             file.basename = '.' + file.basename.slice(1);
           }
         }))
-        .pipe(conflict(`./${gulp.args.join(' ')}`))
-        .pipe(gulp.dest(`./${answers.appName}`))
+        .pipe(conflict(destDir))
+        .pipe(gulp.dest(destDir))
         .pipe(gulpif(answers.install, install()))
         .on('end', function () {
           done();

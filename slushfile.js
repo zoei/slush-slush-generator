@@ -48,10 +48,11 @@ var defaults = (function () {
 
 
 gulp.task('default', function (done) {
+  var nameFromArg = gulp.args.join(' ')
   var prompts = [{
     name: 'appName',
     message: 'What is the name of your slush generator?',
-    default: gulp.args.join(' ') || workingDirName
+    default: nameFromArg || defaults.appName
   }, {
     name: 'appDescription',
     message: 'What is the description?'
@@ -90,7 +91,6 @@ gulp.task('default', function (done) {
   inquirer
     .prompt(prompts)
     .then(function (answers) {
-
       if (!answers.moveon) {
         return done();
       }
@@ -105,6 +105,7 @@ gulp.task('default', function (done) {
       } else {
         files.push('!' + __dirname + '/templates/LICENSE_MIT');
       }
+      var destDir = './' + (nameFromArg ? answers.appNameSlug : '')
       gulp.src(files)
         .pipe(template(answers))
         .pipe(rename(function (file) {
@@ -119,8 +120,8 @@ gulp.task('default', function (done) {
             file.basename = '.' + file.basename.slice(1);
           }
         }))
-        .pipe(conflict(`./${gulp.args.join(' ')}`))
-        .pipe(gulp.dest(`./${gulp.args.join(' ')}`))
+        .pipe(conflict(destDir))
+        .pipe(gulp.dest(destDir))
         .pipe(gulpif(answers.install, install()))
         .on('end', function () {
           done();
