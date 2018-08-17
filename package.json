@@ -20,6 +20,7 @@
     "gulp-template": "^5.0.0",
     "iniparser": "^1.0.5",
     "inquirer": "^4.0.1",
+    "run-sequence": "^2.2.1",
     "underscore.string": "^3.3.4"
   }
 }

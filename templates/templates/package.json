@@ -1,0 +1,32 @@
+{
+    "name": "<%= appNameSlug %>",
+    "description": "<%= appDescription %>",
+    "version": "<%= appVersion %>",
+    "homepage": "https://github.com/<%= userName %>/<%= appNameSlug %>",
+    "author": {
+        "name": "<%= authorName %>",
+        "email": "<%= authorEmail %>"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/<%= userName %>/<%= appNameSlug %>.git"
+    },
+    "bugs": {
+        "url": "https://github.com/<%= userName %>/<%= appNameSlug %>/issues"
+    },
+    "license": "<%= license %>",
+    "main": "index.js",
+    "engines": {
+        "node": ">= 8.0.0",
+        "npm": ">=1.4.3"
+    },
+    "scripts": {
+        "test": "echo \"No tests\""
+    },
+    "dependencies": {
+    },
+    "keywords": [
+        "elzapp",
+        "electron"
+    ]
+}

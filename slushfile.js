@@ -8,6 +8,7 @@ var gulp = require('gulp'),
   gulpif = require('gulp-if'),
   _ = require('underscore.string'),
   inquirer = require('inquirer'),
+  runSequence = require('run-sequence'),
   path = require('path');
 
 
@@ -46,8 +47,9 @@ var defaults = (function () {
   };
 })();
 
+var slushAnswers = {}
 
-gulp.task('default', function (done) {
+gulp.task('slush', function (done) {
   var nameFromArg = gulp.args.join(' ')
   var prompts = [{
     name: 'appName',
@@ -88,9 +90,10 @@ gulp.task('default', function (done) {
     message: 'Continue?'
   }];
   //Ask
-  inquirer
+  return inquirer
     .prompt(prompts)
     .then(function (answers) {
+      slushAnswers = answers
       if (!answers.moveon) {
         return done();
       }
@@ -99,13 +102,13 @@ gulp.task('default', function (done) {
       var d = new Date();
       answers.year = d.getFullYear();
       answers.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      var files = [__dirname + '/templates/**'];
+      var files = [__dirname + '/templates/**', '!' + __dirname + '/templates/templates/**'];
       if (answers.license === 'MIT') {
         files.push('!' + __dirname + '/templates/LICENSE_BSD');
       } else {
         files.push('!' + __dirname + '/templates/LICENSE_MIT');
       }
-      var destDir = './' + (nameFromArg ? answers.appNameSlug : '')
+      answers.appPath = path.resolve('.', nameFromArg ? answers.appNameSlug : '')
       gulp.src(files)
         .pipe(template(answers))
         .pipe(rename(function (file) {
@@ -120,11 +123,22 @@ gulp.task('default', function (done) {
             file.basename = '.' + file.basename.slice(1);
           }
         }))
-        .pipe(conflict(destDir))
-        .pipe(gulp.dest(destDir))
+        .pipe(conflict(answers.appPath))
+        .pipe(gulp.dest(answers.appPath))
         .pipe(gulpif(answers.install, install()))
         .on('end', function () {
           done();
         });
     });
 });
+
+gulp.task('copy', ['slush'], function (done) {
+  gulp.src(__dirname + '/templates/templates/**')
+    .pipe(conflict(slushAnswers.appPath + '/templates'))
+    .pipe(gulp.dest(slushAnswers.appPath + '/templates'))
+    .on('end', function () {
+      done();
+    })
+})
+
+gulp.task('default', ['copy'])
