@@ -106,7 +106,7 @@ gulp.task('default', function (done) {
       }
       var destDir = './' + (nameFromArg ? answers.appNameSlug : '')
       gulp.src(files)
-        .pipe(template(answers))
+        .pipe(template(answers, { interpolate: /<%=([\s\S]+?)%>/g }))
         .pipe(rename(function (file) {
           if (answers.license === 'MIT') {
             var mit = file.basename.replace('LICENSE_MIT', 'LICENSE');
